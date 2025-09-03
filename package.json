@@ -18,6 +18,9 @@
   "homepage": "https://github.com/tiagohoinack/harve-questionario-online#readme",
   "description": "",
   "dependencies": {
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "mysql2": "^3.14.4",
+    "vite": "^7.1.4",
+    "yup": "^1.7.0"
   }
 }
