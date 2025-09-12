@@ -1,23 +1,25 @@
-import { conectar } from "../conf/db";
+import { conectar } from "../conf/db.js";
 
-async function findUsuarioByEmail(email) {
+export async function findUsuarioByEmail(email) {
   const db = await conectar();
   const sqlBuscarUsuario = "SELECT * FROM usuarios WHERE email = ?";
-  const [usuario] = await db.execute(sqlBuscarUsuario, email);
+  const [rows] = await db.execute(sqlBuscarUsuario, [email]);
   await db.end();
 
-  if (usuario.length > 0) {
+  if (rows.length > 0) {
     console.log("Usuário já existe!");
-    return usuario;
+    return rows[0];
   } else {
-    console.error("Usuário não existe!");
+    return null;
   }
 }
 
-async function cadastrarUsuario(nome, email) {
+export async function adicionarUsuario(nome, email) {
   const db = await conectar();
-  const sqlCadastrarUsuario =
+  const sqlAdicionarUsuario =
     "INSERT INTO usuarios (nome, email) VALUES (?, ?)";
-  const [usuario] = await db.execute(sqlCadastrarUsuario, (nome, email));
+  const [result] = await db.execute(sqlAdicionarUsuario, [nome, email]);
   await db.end();
+
+  return result;
 }

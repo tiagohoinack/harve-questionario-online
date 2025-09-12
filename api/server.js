@@ -1,21 +1,18 @@
 import express from "express";
+import usuarioService from "./src/services/usuarioService.js";
+import { listarPerguntasCompletas } from "./src/perguntas.js";
+
 const app = express();
 const port = 3000;
 
-app.listen(port, () => {
-  console.log(`Servidor iniciado na porta ${port}`);
-});
+app.use(express.json());
 
 app.get("/api/perguntas", async (req, res) => {
-  res
-    .status(200)
-    .json({ message: "Endpoint /API/PERGUNTAS acessado com sucesso" });
+  return listarPerguntasCompletas(res);
 });
 
 app.post("/api/usuario", async (req, res) => {
-  res
-    .status(200)
-    .json({ message: "Endpoint /API/USUARIOS acessado com sucesso" });
+  return usuarioService.cadastrarUsuario(req, res);
 });
 
 app.post("/api/questionario/email", async (req, res) => {
@@ -28,4 +25,8 @@ app.put("/api/questionario", async (req, res) => {
   res
     .status(200)
     .json({ message: "Endpoint /API/QUESTIONARIO acessado com sucesso" });
+});
+
+app.listen(port, () => {
+  console.log(`Servidor iniciado na porta ${port}`);
 });
